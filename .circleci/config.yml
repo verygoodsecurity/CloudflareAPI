@@ -125,6 +125,11 @@ workflows:
           filters:
             tags:
               only: /.*/
+      - cve-checks:
+          context: artifact-publisher
+          filters:
+            tags:
+              only: /.*/
       - test:
           context: artifact-publisher
           requires:
