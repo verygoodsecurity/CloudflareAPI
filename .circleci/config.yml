@@ -127,6 +127,8 @@ workflows:
               only: /.*/
       - cve-checks:
           context: artifact-publisher
+          requires:
+            - build
           filters:
             tags:
               only: /.*/
@@ -134,7 +136,6 @@ workflows:
           context: artifact-publisher
           requires:
             - build
-            - cve-checks
           filters:
             tags:
               only: /.*/
@@ -142,6 +143,7 @@ workflows:
           context: artifact-publisher
           requires:
             - test
+            - cve-checks
           filters:
             branches:
               only: vgs-edition
