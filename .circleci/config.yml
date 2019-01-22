@@ -53,6 +53,18 @@ jobs:
             unset AWS_ACCESS_KEY_ID; unset AWS_SECRET_ACCESS_KEY; mvn clean dependency:go-offline install -Dmaven.test.skip=true --threads 5 -B
       - <<: *save-maven-cache
       - <<: *persist-workspace
+  cve-checks:
+    <<: *job-defaults
+    machine:
+      enabled: true
+    steps:
+      - checkout
+      - <<: *setup-env
+      - <<: *restore-maven-cache
+      - run:
+          name: CVE checks
+          command: |
+            unset AWS_ACCESS_KEY_ID; unset AWS_SECRET_ACCESS_KEY; mvn dependency-check:aggregate
   test:
     <<: *job-defaults
     machine:
@@ -117,6 +129,7 @@ workflows:
           context: artifact-publisher
           requires:
             - build
+            - cve-checks
           filters:
             tags:
               only: /.*/
