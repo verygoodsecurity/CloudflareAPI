@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<suppressions xmlns="https://jeremylong.github.io/DependencyCheck/dependency-suppression.1.1.xsd">
+    <suppress>
+        <notes><![CDATA[
+        CVE-2015-1820 is a not fixed issue as all versions are effected.
+        https://nvd.nist.gov/vuln/detail/CVE-2015-1820
+        This one should be updated as soon as new version will be available
+        ]]></notes>
+        <gav regex="true">^io.joshworks.unirest:unirest-java:.*$</gav>
+        <cve>CVE-2015-1820</cve>
+    </suppress>
+</suppressions>
