@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>eu.roboflax.cloudflare</groupId>
     <artifactId>cloudflare-java</artifactId>
-    <version>1.0.10</version>
+    <version>1.0.11-SNAPSHOT</version>
     <packaging>jar</packaging>
     <name>VGS Cloudflare - API/Library</name>
     <description>A Java Cloudflare API/Library.</description>
