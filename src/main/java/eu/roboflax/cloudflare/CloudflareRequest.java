@@ -17,6 +17,7 @@ import eu.roboflax.cloudflare.http.HttpMethod;
 import io.joshworks.restclient.http.HttpResponse;
 import lombok.Getter;
 import org.apache.commons.lang3.tuple.Pair;
+import org.apache.http.HttpHeaders;
 
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
@@ -257,6 +258,7 @@ public class CloudflareRequest {
             case POST:
                 return cloudflareAccess.getRestClient()
                         .post( categoryPath() )
+                        .header(HttpHeaders.CONTENT_TYPE, "application/json")
                         .queryString( queryStrings )
                         .body( body.toString() )
                         .asString();
@@ -269,12 +271,14 @@ public class CloudflareRequest {
             case PUT:
                 return cloudflareAccess.getRestClient()
                         .put( categoryPath() )
+                        .header(HttpHeaders.CONTENT_TYPE, "application/json")
                         .queryString( queryStrings )
                         .body( body.toString() )
                         .asString();
             case PATCH:
                 return cloudflareAccess.getRestClient()
                         .patch( categoryPath() )
+                        .header(HttpHeaders.CONTENT_TYPE, "application/json")
                         .queryString( queryStrings )
                         .body( body.toString() )
                         .asString();

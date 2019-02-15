@@ -65,7 +65,6 @@ public class CloudflareAccess implements Closeable {
         this.threadPool = threadPool;
         restClient = RestClient.builder()
             .baseUrl( apiBaseUrl )
-            .defaultHeader( "Content-Type", "application/json" )
             .defaultHeader( "X-Auth-Key", this.getXAuthKey() )
             .defaultHeader( "X-Auth-Email", this.getXAuthEmail() )
             .followRedirect( false )
