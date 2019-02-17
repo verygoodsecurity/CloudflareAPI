@@ -23,6 +23,7 @@ import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.Callable;
@@ -45,7 +46,8 @@ public class CloudflareRequest {
     private List<String> orderedIdentifiers = Lists.newArrayList();
     private Map<String, Object> queryStrings = Maps.newHashMap();
     private JsonObject body = new JsonObject();
-    
+    private Map<String, String> additionalHeaders = Maps.newHashMap();
+
     private Pair<HttpResponse<String>, JsonObject> response;
     
     public static final String ERROR_INVALID_ADDITIONAL_PATH = "you have to specify the additional path";
@@ -164,6 +166,11 @@ public class CloudflareRequest {
         return this;
     }
     
+    public CloudflareRequest additionalHeaders( Map<String, String> additionalHeaders ) {
+        this.additionalHeaders = checkNotNull( additionalHeaders );
+        return this;
+    }
+
     public CloudflareRequest category( Category category ) {
         checkNotNull( category );
         httpMethod( category.getHttpMethod() ).additionalPath( category.getAdditionalPath() );
@@ -256,9 +263,13 @@ public class CloudflareRequest {
                         .queryString( queryStrings )
                         .asString();
             case POST:
+                if (!additionalHeaders.containsKey(HttpHeaders.CONTENT_TYPE)) {
+                    additionalHeaders.put(HttpHeaders.CONTENT_TYPE, "application/json");
+                }
+
                 return cloudflareAccess.getRestClient()
                         .post( categoryPath() )
-                        .header(HttpHeaders.CONTENT_TYPE, "application/json")
+                        .headers( additionalHeaders )
                         .queryString( queryStrings )
                         .body( body.toString() )
                         .asString();
@@ -269,16 +280,24 @@ public class CloudflareRequest {
                         .body( body.toString() )
                         .asString();
             case PUT:
+                if (!additionalHeaders.containsKey(HttpHeaders.CONTENT_TYPE)) {
+                    additionalHeaders.put(HttpHeaders.CONTENT_TYPE, "application/json");
+                }
+
                 return cloudflareAccess.getRestClient()
                         .put( categoryPath() )
-                        .header(HttpHeaders.CONTENT_TYPE, "application/json")
+                        .headers( additionalHeaders )
                         .queryString( queryStrings )
                         .body( body.toString() )
                         .asString();
             case PATCH:
+                if (!additionalHeaders.containsKey(HttpHeaders.CONTENT_TYPE)) {
+                    additionalHeaders.put(HttpHeaders.CONTENT_TYPE, "application/json");
+                }
+
                 return cloudflareAccess.getRestClient()
                         .patch( categoryPath() )
-                        .header(HttpHeaders.CONTENT_TYPE, "application/json")
+                        .headers( additionalHeaders )
                         .queryString( queryStrings )
                         .body( body.toString() )
                         .asString();
