@@ -39,9 +39,9 @@ public class WorkerScript implements Identifiable {
 
   @SerializedName("created_on")
   @Expose
-  private int createdOn;
+  private String createdOn;
 
   @SerializedName("modified_on")
   @Expose
-  private int modifiedOn;
+  private String modifiedOn;
 }

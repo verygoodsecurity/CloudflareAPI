@@ -45,7 +45,7 @@ public class CloudflareRequest {
     private String additionalPath;
     private List<String> orderedIdentifiers = Lists.newArrayList();
     private Map<String, Object> queryStrings = Maps.newHashMap();
-    private JsonObject body = new JsonObject();
+    private Object body = null;
     private Map<String, String> additionalHeaders = Maps.newHashMap();
 
     private Pair<HttpResponse<String>, JsonObject> response;
@@ -209,7 +209,11 @@ public class CloudflareRequest {
             queryString( parameter, value );
         return this;
     }
-    
+
+    public JsonObject currentBody() {
+        return (body == null) ? new JsonObject() : (JsonObject) body;
+    }
+
     public CloudflareRequest body( JsonObject wholeBody ) {
         body = checkNotNull( wholeBody );
         return this;
@@ -220,33 +224,38 @@ public class CloudflareRequest {
         return this;
     }
     
+    public CloudflareRequest plainTextBody( String wholeBody ) {
+        body = wholeBody;
+        return this;
+    }
+
     public CloudflareRequest body( String wholeBody ) {
         body( new JsonParser().parse( checkNotNull( wholeBody ) ) );
         return this;
     }
-    
+
     public CloudflareRequest body( String property, String value ) {
-        body.addProperty( checkNotNull( property, ERROR_INVALID_BODY ), checkNotNull( value, ERROR_INVALID_BODY ) );
+        currentBody().addProperty( checkNotNull( property, ERROR_INVALID_BODY ), checkNotNull( value, ERROR_INVALID_BODY ) );
         return this;
     }
     
     public CloudflareRequest body( String property, Number value ) {
-        body.addProperty( checkNotNull( property, ERROR_INVALID_BODY ), checkNotNull( value, ERROR_INVALID_BODY ) );
+        currentBody().addProperty( checkNotNull( property, ERROR_INVALID_BODY ), checkNotNull( value, ERROR_INVALID_BODY ) );
         return this;
     }
     
     public CloudflareRequest body( String property, Boolean value ) {
-        body.addProperty( checkNotNull( property, ERROR_INVALID_BODY ), checkNotNull( value, ERROR_INVALID_BODY ) );
+        currentBody().addProperty( checkNotNull( property, ERROR_INVALID_BODY ), checkNotNull( value, ERROR_INVALID_BODY ) );
         return this;
     }
     
     public CloudflareRequest body( String property, Character value ) {
-        body.addProperty( checkNotNull( property, ERROR_INVALID_BODY ), checkNotNull( value, ERROR_INVALID_BODY ) );
+        currentBody().addProperty( checkNotNull( property, ERROR_INVALID_BODY ), checkNotNull( value, ERROR_INVALID_BODY ) );
         return this;
     }
     
     public CloudflareRequest body( String property, JsonElement value ) {
-        body.add( checkNotNull( property, ERROR_INVALID_BODY ), checkNotNull( value, ERROR_INVALID_BODY ) );
+        currentBody().add( checkNotNull( property, ERROR_INVALID_BODY ), checkNotNull( value, ERROR_INVALID_BODY ) );
         return this;
     }
     
