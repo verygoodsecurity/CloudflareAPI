@@ -286,7 +286,6 @@ public class CloudflareRequest {
                 return cloudflareAccess.getRestClient()
                         .delete( categoryPath() )
                         .queryString( queryStrings )
-                        .body( body.toString() )
                         .asString();
             case PUT:
                 if (!additionalHeaders.containsKey(HttpHeaders.CONTENT_TYPE)) {
