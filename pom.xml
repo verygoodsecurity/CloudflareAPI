@@ -282,7 +282,7 @@
                         <productionBranch>vgs-edition</productionBranch>
                         <developmentBranch>vgs-edition</developmentBranch>
                         <releaseBranchPrefix>release-</releaseBranchPrefix>
-                        <versionTagPrefix></versionTagPrefix>
+                        <versionTagPrefix/>
                     </gitFlowConfig>
                     <commitMessages>
                         <releaseStartMessage>update versions for @{version} release</releaseStartMessage>
@@ -353,7 +353,7 @@
         <dependency>
             <groupId>com.google.guava</groupId>
             <artifactId>guava</artifactId>
-            <version>24.0-jre</version>
+            <version>30.0-android</version>
         </dependency>
         <dependency>
             <groupId>org.projectlombok</groupId>
